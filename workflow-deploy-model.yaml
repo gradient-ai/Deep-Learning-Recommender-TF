@@ -1,0 +1,86 @@
+# Recommender workflow: Deploy model
+#
+# Dataset IDs
+#
+# The user needs to create their own Gradient managed dataset for job outputs to replace the ID this file contains:
+#
+# UploadModel -> "dstvt0e2sp88yuf:cj8zm2t"
+#
+# Last updated: Jun 10th 2021
+#
+# TODO when ready to share publicly
+#
+# Point to dataset ID on public copy under Gradient Next team
+# Replace awk/tee/cat with model ID when better deploy actions supported
+
+defaults:
+  resources:
+    instance-type: C5
+  env:
+    PAPERSPACE_API_KEY: secret:api_key_recommender
+
+jobs:
+
+  # 1. Upload model
+  #
+  # This makes the model visible to the deploy step, and gets its ID
+
+  UploadModel:
+    inputs:
+      model:
+        type: dataset
+        with:
+          id: dstvt0e2sp88yuf:phf0zt7
+    outputs:
+      model-id:
+        type: string
+    uses: create-model@v1
+    with:
+      name: model
+      type: Tensorflow
+
+  # 2. Deploy model
+  #
+  # Creates a deployment in the stopped state
+
+  CreateDeployment:
+    needs:
+      - UploadModel
+    inputs:
+      model-id: UploadModel.outputs.model-id
+    outputs:
+       deployment-id:
+          type: string
+    uses: script@v1
+    with:
+      script: |-
+        cd /inputs
+        gradient deployments create \
+          --deploymentType TFServing \
+          --modelId $(cat /inputs/model-id) \
+          --name "Recommender Model" \
+          --machineType C5 \
+          --imageUrl tensorflow/serving:latest-gpu \
+          --instanceCount 1 \
+          --clusterId "clcrk7tev" \
+          | awk 'NR==1 {print $NF}' \
+          | tee /outputs/deployment-id
+      image: paperspace/gradient-sdk
+
+  # 3. Start deployment
+  #
+  # Start the deployment created in step 2 on an endpoint
+
+  StartDeployment:
+    needs:
+      - UploadModel
+      - CreateDeployment
+    inputs:
+      model-id: UploadModel.outputs.model-id
+      deployment-id: CreateDeployment.outputs.deployment-id
+    uses: script@v1
+    with:
+      script: |-
+        gradient deployments start \
+          --id $(cat /inputs/deployment-id)
+      image: paperspace/gradient-sdk

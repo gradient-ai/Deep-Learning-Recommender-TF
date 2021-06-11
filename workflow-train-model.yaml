@@ -1,0 +1,63 @@
+# Recommender workflow: Train model
+#
+# Dataset IDs
+#
+# The user needs to create their own Gradient managed dataset for job outputs to replace the ID this file contains:
+#
+# trainedRecommender -> "dstvt0e2sp88yuf"
+#
+# Last updated: Jun 11th 2021
+#
+# TODO when ready to share publicly
+#
+# Won't need username and password once repo is public
+# Point to https://github.com/gradient-ai/Deep-Learning-Recommender-TF
+# Point to dataset ID on public copy under Gradient Next team
+# Supply hyperparams as env: defining env var HP_FINAL_EPOCHS and HP_FINAL_LR hits PLA-278
+
+defaults:
+  resources:
+    instance-type: P4000
+  env:
+    PAPERSPACE_API_KEY: secret:api_key_recommender
+#    HP_FINAL_EPOCHS: '50'
+#    HP_FINAL_LR: '0.1'
+
+jobs:
+
+  # 1. Clone recommender repo
+
+  # Use git-checkout action so can pass my Git Token as a secret
+  # URL has to be without .git extension
+  # Checkout results in output volume, so don't need "outputs:" field
+
+  CloneRecRepo:
+    inputs:
+      repoRec:
+        type: volume
+    uses: git-checkout@v1
+    with:
+      url: https://github.com/Paperspace/Deep-Learning-Recommender-TF
+      username: nmb-paperspace
+      password: secret:GIT_PASSWORD
+
+  # 2. Train model by running train.py
+
+  RecommenderTrain:
+    needs:
+      - CloneRecRepo
+    inputs:
+      repoRec:
+        type: volume
+    outputs:
+      trainedRecommender:
+        type: dataset
+        with:
+          id: "dstvt0e2sp88yuf"
+    uses: script@v1
+    with:
+      script: |-
+        cp -R /inputs/repoRec /Deep-Learning-Recommender-TF
+        cd /Deep-Learning-Recommender-TF
+        python workflow_train_model.py
+      image: tensorflow/tensorflow:2.4.1-jupyter
