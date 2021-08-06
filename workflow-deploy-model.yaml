@@ -6,7 +6,7 @@
 #
 # UploadModel -> "dstvt0e2sp88yuf:cj8zm2t"
 #
-# Last updated: Jun 10th 2021
+# Last updated: Aug 05th 2021
 #
 # TODO when ready to share publicly
 #
@@ -30,7 +30,7 @@ jobs:
       model:
         type: dataset
         with:
-          id: dstvt0e2sp88yuf:phf0zt7
+          ref: dstew77gm1r0r24:mkx6lto #dstvt0e2sp88yuf:phf0zt7
     outputs:
       model-id:
         type: string
