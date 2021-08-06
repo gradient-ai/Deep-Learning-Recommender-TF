@@ -1,9 +1,7 @@
 # Deep-Learning-Recommender-TF
 
-Last updated: Jun 11th 2021
+Last updated: Aug 06th 2021
 
-Deep learning recommender end-to-end project showing Gradient Notebooks and Workflows.
+This is the repo containing the files required to run the Gradient tutorial end-to-end example *Gradient End-to-End: A Recommender System using Notebooks and Workflows* at https://docs.paperspace.com/gradient/get-started/tutorials-list/end-to-end-example .
 
-This is to be shared once Workflow deployment model start is supported, and any other caveats that we want to resolve are fixed.
-
-For now, this repo is **private, not public**.
+Please refer to that page for more details.
