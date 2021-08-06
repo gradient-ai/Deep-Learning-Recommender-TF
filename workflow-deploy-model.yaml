@@ -4,14 +4,9 @@
 #
 # The user needs to create their own Gradient managed dataset for job outputs to replace the ID this file contains:
 #
-# UploadModel -> "dstvt0e2sp88yuf:cj8zm2t"
+# UploadModel -> dstew77gm1r0r24:mkx6lto #dstvt0e2sp88yuf:cj8zm2t
 #
-# Last updated: Aug 05th 2021
-#
-# TODO when ready to share publicly
-#
-# Point to dataset ID on public copy under Gradient Next team
-# Replace awk/tee/cat with model ID when better deploy actions supported
+# Last updated: Aug 06th 2021
 
 defaults:
   resources:

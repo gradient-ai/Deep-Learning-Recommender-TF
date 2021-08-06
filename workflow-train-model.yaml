@@ -6,13 +6,7 @@
 #
 # trainedRecommender -> "dstew77gm1r0r24" #"dstvt0e2sp88yuf"
 #
-# Last updated: Aug 05th 2021
-#
-# TODO when ready to share publicly
-#
-# Won't need username and password once repo is public
-# Point to https://github.com/gradient-ai/Deep-Learning-Recommender-TF
-# Point to dataset ID on public copy under Gradient Next team
+# Last updated: Aug 06th 2021
 
 defaults:
   resources:
@@ -35,8 +29,8 @@ jobs:
     uses: git-checkout@v1
     with:
       url: https://github.com/Paperspace/Deep-Learning-Recommender-TF
-      username: nmb-paperspace
-      password: secret:GIT_PASSWORD
+      #username: nmb-paperspace
+      #password: secret:GIT_PASSWORD
 
   # 2. Train model by running train.py
 
