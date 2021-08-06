@@ -1,10 +1,18 @@
-# Recommender workflow: Train model
+# Recommender workflow 1 of 2: Train model
+#
+# Part of the project "Gradient End-to-End: A Recommender System using Notebooks and Workflows"
+# at https://docs.paperspace.com/gradient/get-started/tutorials-list/end-to-end-example
+# See that URL for instructions on how to use
+# This file is called from the Gradient Notebook deep_learning_recommender_tf.ipynb
+# In turn, this file calls workflow_train_model.py
+# A trained model is output, which is then deployed in the following section of the Notebook
+# The project GitHub repository, which includes this file, is at https://github.com/gradient-ai/Deep-Learning-Recommender-TF
 #
 # Dataset IDs
 #
 # The user needs to create their own Gradient managed dataset for job outputs to replace the ID this file contains:
 #
-# trainedRecommender -> "dstew77gm1r0r24" #"dstvt0e2sp88yuf"
+# trainedRecommender -> "dstew77gm1r0r24"
 #
 # Last updated: Aug 06th 2021
 
@@ -18,9 +26,9 @@ jobs:
 
   # 1. Clone recommender repo
 
-  # Use git-checkout action so can pass my Git Token as a secret
-  # URL has to be without .git extension
-  # Checkout results in output volume, so don't need "outputs:" field
+  # The repo is public so no GitHub authorization credentials are required
+  # The URL has to be without .git extension
+  # The checkout results in an output volume that is then referred to in subsequent jobs in this file
 
   CloneRecRepo:
     outputs:
@@ -29,10 +37,12 @@ jobs:
     uses: git-checkout@v1
     with:
       url: https://github.com/gradient-ai/Deep-Learning-Recommender-TF
-      #username: nmb-paperspace
-      #password: secret:GIT_PASSWORD
 
-  # 2. Train model by running train.py
+  # 2. Train model
+
+  # The job calls the Python script workflow_train_model.py
+  # Model hyperparameters are passed in as environment variables using the env keyword
+  # The script outputs the saved model to /outputs/trainedRecommender, a versioned Gradient Dataset
 
   RecommenderTrain:
     needs:
@@ -46,7 +56,7 @@ jobs:
       trainedRecommender:
         type: dataset
         with:
-          ref: "dstew77gm1r0r24" #"dstvt0e2sp88yuf"
+          ref: "dstew77gm1r0r24"
     uses: script@v1
     with:
       script: |-

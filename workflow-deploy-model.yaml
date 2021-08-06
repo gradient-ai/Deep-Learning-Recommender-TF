@@ -1,10 +1,20 @@
-# Recommender workflow: Deploy model
+# Recommender workflow 2 of 2: Deploy model
+#
+# Part of the project "Gradient End-to-End: A Recommender System using Notebooks and Workflows"
+# at https://docs.paperspace.com/gradient/get-started/tutorials-list/end-to-end-example
+# See that URL for instructions on how to use
+# This file is called from the Gradient Notebook deep_learning_recommender_tf.ipynb
+# A deployed model is output, to which inference data can then be sent following section of the Notebook [1]
+# The project GitHub repository, which includes this file, is at https://github.com/gradient-ai/Deep-Learning-Recommender-TF
 #
 # Dataset IDs
 #
 # The user needs to create their own Gradient managed dataset for job outputs to replace the ID this file contains:
 #
-# UploadModel -> dstew77gm1r0r24:mkx6lto #dstvt0e2sp88yuf:cj8zm2t
+# UploadModel -> dstew77gm1r0r24:mkx6lto
+#
+# [1] NOTE: The Notebook section in which inference data is to be sent is pending support from the product,
+# but is shown there for completeness
 #
 # Last updated: Aug 06th 2021
 
@@ -19,13 +29,14 @@ jobs:
   # 1. Upload model
   #
   # This makes the model visible to the deploy step, and gets its ID
+  # A particular version of the model is specified, via the ref field containing <dataset ID>:<dataset version>
 
   UploadModel:
     inputs:
       model:
         type: dataset
         with:
-          ref: dstew77gm1r0r24:mkx6lto #dstvt0e2sp88yuf:phf0zt7
+          ref: dstew77gm1r0r24:mkx6lto
     outputs:
       model-id:
         type: string
@@ -37,6 +48,7 @@ jobs:
   # 2. Deploy model
   #
   # Creates a deployment in the stopped state
+  # NOTE: In future passing the model ID will be better supported, and will not require the "cat" command
 
   CreateDeployment:
     needs:
@@ -57,7 +69,6 @@ jobs:
           --machineType C5 \
           --imageUrl tensorflow/serving:latest-gpu \
           --instanceCount 1 \
-          --clusterId "clcrk7tev" \
           | awk 'NR==1 {print $NF}' \
           | tee /outputs/deployment-id
       image: paperspace/gradient-sdk
