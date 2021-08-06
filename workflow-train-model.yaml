@@ -28,7 +28,7 @@ jobs:
         type: volume
     uses: git-checkout@v1
     with:
-      url: https://github.com/Paperspace/Deep-Learning-Recommender-TF
+      url: https://github.com/gradient-ai/Deep-Learning-Recommender-TF
       #username: nmb-paperspace
       #password: secret:GIT_PASSWORD
 
