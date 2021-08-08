@@ -7,17 +7,11 @@
 # A deployed model is output, to which inference data can then be sent in the following section of the Notebook [1]
 # The project GitHub repository, which includes this file, is at https://github.com/gradient-ai/Deep-Learning-Recommender-TF
 #
-# Dataset IDs
-#
-# The user needs to create their own Gradient managed dataset for job outputs to replace the ID this file contains:
-#
-# UploadModel -> dstew77gm1r0r24:mkx6lto
-#
 # [1] NOTE: The Notebook section in which inference data is to be sent is pending support from the product,
 # but is shown there for completeness. Also, on the public cluster, job 2 will fail due to the lack of a --clusterID
 # argument. But model deploy support will supersede this.
 #
-# Last updated: Aug 06th 2021
+# Last updated: Aug 08th 2021
 
 defaults:
   resources:
@@ -30,14 +24,15 @@ jobs:
   # 1. Upload model
   #
   # This makes the model visible to the deploy step, and gets its ID
-  # A particular version of the model is specified, via the ref field containing <dataset ID>:<dataset version>
+  # The model dataset reference refers to the latest version of the model
+  # A particular version of the model can also be specified, via <dataset ID>:<dataset version>
 
   UploadModel:
     inputs:
       model:
         type: dataset
         with:
-          ref: dstew77gm1r0r24:mkx6lto
+          ref: recommender
     outputs:
       model-id:
         type: string

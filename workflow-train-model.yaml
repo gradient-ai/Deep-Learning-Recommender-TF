@@ -8,13 +8,12 @@
 # A trained model is output, which is then deployed in the following section of the Notebook
 # The project GitHub repository, which includes this file, is at https://github.com/gradient-ai/Deep-Learning-Recommender-TF
 #
-# Dataset IDs
+# Dataset ID
 #
-# The user needs to create their own Gradient managed dataset for job outputs to replace the ID this file contains:
+# The user needs to create their own Gradient managed dataset for job outputs, using the same name as here: "recommender"
+# See the project Notebook for details on how to do this
 #
-# trainedRecommender -> "dstew77gm1r0r24"
-#
-# Last updated: Aug 06th 2021
+# Last updated: Aug 08th 2021
 
 defaults:
   resources:
@@ -56,7 +55,7 @@ jobs:
       trainedRecommender:
         type: dataset
         with:
-          ref: "dstew77gm1r0r24"
+          ref: recommender
     uses: script@v1
     with:
       script: |-
