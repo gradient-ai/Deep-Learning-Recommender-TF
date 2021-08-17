@@ -11,11 +11,11 @@
 # but is shown there for completeness. Also, on the public cluster, job 2 will fail due to the lack of a --clusterID
 # argument. But model deploy support will supersede this.
 #
-# Last updated: Aug 08th 2021
+# Last updated: Aug 16th 2021
 
 defaults:
   resources:
-    instance-type: C5
+    instance-type: C3
   env:
     PAPERSPACE_API_KEY: secret:api_key_recommender
 

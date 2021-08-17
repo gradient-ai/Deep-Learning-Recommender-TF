@@ -13,11 +13,11 @@
 # The user needs to create their own Gradient managed dataset for job outputs, using the same name as here: "recommender"
 # See the project Notebook for details on how to do this
 #
-# Last updated: Aug 08th 2021
+# Last updated: Aug 16th 2021
 
 defaults:
   resources:
-    instance-type: P4000
+    instance-type: C3 # C5, P4000, etc., will also work
   env:
     PAPERSPACE_API_KEY: secret:api_key_recommender
 
